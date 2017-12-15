@@ -1,4 +1,4 @@
-/**
+/*!
  * JS RANDOM ACTION MODULE
  *
  * https://github.com/yama-dev/js-random-action-module

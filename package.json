@@ -13,10 +13,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "yama-dev"
+    "url": "https://github.com/yama-dev/js-random-action-module"
   },
   "author": "yama-dev",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-preset-babili": "^0.1.4",
