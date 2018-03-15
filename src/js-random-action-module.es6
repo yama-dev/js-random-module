@@ -1,7 +1,10 @@
-/**
+/*!
+ * @license
+ *
  * JS RANDOM ACTION MODULE
  *
  * https://github.com/yama-dev/js-random-action-module
+ * versoin 0.0.2
  * Copyright yama-dev
  * Licensed under the MIT license.
  *

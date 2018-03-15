@@ -1,1 +1,148 @@
-'use strict';var _createClass=function(){function a(a,b){for(var c,d=0;d<b.length;d++)c=b[d],c.enumerable=c.enumerable||!1,c.configurable=!0,'value'in c&&(c.writable=!0),Object.defineProperty(a,c.key,c)}return function(b,c,d){return c&&a(b.prototype,c),d&&a(b,d),b}}();function _classCallCheck(a,b){if(!(a instanceof b))throw new TypeError('Cannot call a class as a function')}var JS_RANDOM_ACTION_MODULE=function(){function a(b){var c=this,d=1<arguments.length&&void 0!==arguments[1]?arguments[1]:{};_classCallCheck(this,a),this.CONFIG={elemWrap:d.elemWrap||'body',elemItems:b||'.bg__item',durationX2:d.durationX2||2e3,interval:d.interval||1e3,addClassName:d.addClassName||'active',autoStart:!1!=d.autoStart},this.elemWrap=document.querySelector(this.CONFIG.elemWrap),this.elemItems=Array.prototype.slice.call(document.querySelectorAll(this.CONFIG.elemWrap+' '+this.CONFIG.elemItems)),this.elemItemsLenght=this.elemItems.length-1,this.checkElemList=[];for(var e=0;e<=this.elemItemsLenght;e++)this.checkElemList[e]=!0;window.addEventListener('load',function(){c.Initialize()})}return _createClass(a,[{key:'Random',value:function Random(){return Math.random()}},{key:'Round',value:function Round(a){return Math.round(100*a)/100}},{key:'RandomSelect',value:function RandomSelect(){var a=0<arguments.length&&void 0!==arguments[0]?arguments[0]:0,b=1<arguments.length&&void 0!==arguments[1]?arguments[1]:10;return Math.floor(Math.random()*(b+1-a)+a)}},{key:'Initialize',value:function Initialize(){var a=this;Array.prototype.forEach.call(this.elemItems,function(b){var c=a.Round(a.elemWrap.clientHeight*a.Random()),d=a.Round(a.elemWrap.clientWidth*a.Random());b.style.top=c+'px',b.style.left=d+'px'}),this.CONFIG.autoStart&&this.StartAction()}},{key:'StartAction',value:function StartAction(){var a=this;setInterval(function(){a.Decision()},this.CONFIG.interval)}},{key:'Decision',value:function Decision(){var a=this.RandomSelect(0,this.elemItemsLenght);this.checkElemList[a]&&(this.checkElemList[a]=!1,this.Action(a))}},{key:'Action',value:function Action(a){var b=this;this.Motion(a),setTimeout(function(){b.elemItems[a].classList.remove(b.CONFIG.addClassName)},0.5*this.CONFIG.durationX2),setTimeout(function(){b.Decision(),b.checkElemList[a]=!0},this.CONFIG.durationX2)}},{key:'Motion',value:function Motion(a){var b=this.Round(this.elemWrap.clientHeight*this.Random()),c=this.Round(this.elemWrap.clientWidth*this.Random()),d=0.5*this.elemItems[a].clientWidth,e=0.5*this.elemItems[a].clientHeight;this.elemItems[a].style.top=b-e+'px',this.elemItems[a].style.left=c-d+'px',this.elemItems[a].classList.add(this.CONFIG.addClassName)}}]),a}();
+'use strict';
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+/*!
+ * @license
+ *
+ * JS RANDOM ACTION MODULE
+ *
+ * https://github.com/yama-dev/js-random-action-module
+ * versoin 0.0.2
+ * Copyright yama-dev
+ * Licensed under the MIT license.
+ *
+ * Instance
+ *   new JS_RANDOM_ACTION_MODULE( elemet ,{ options });
+ *
+ * Options Params.
+ *   elemWrap     | str | default 'body'   | ex. 'body'
+ *   durationX2   | int | default 2000     | ex. 2000
+ *   interval     | int | default 1000     | ex. 1000
+ *   addClassName | str | default 'active' | ex. 'active'
+*/
+
+var JS_RANDOM_ACTION_MODULE = function () {
+  function JS_RANDOM_ACTION_MODULE(elemItems) {
+    var _this = this;
+
+    var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+    _classCallCheck(this, JS_RANDOM_ACTION_MODULE);
+
+    // Set Configs.
+    this.CONFIG = {
+      elemWrap: options.elemWrap || 'body',
+      elemItems: elemItems || '.bg__item',
+      durationX2: options.durationX2 || 2000,
+      interval: options.interval || 1000,
+      addClassName: options.addClassName || 'active',
+      autoStart: options.autoStart == false ? false : true
+    };
+
+    // Set Elements.
+    this.elemWrap = document.querySelector(this.CONFIG.elemWrap);
+    this.elemItems = Array.prototype.slice.call(document.querySelectorAll(this.CONFIG.elemWrap + ' ' + this.CONFIG.elemItems));
+
+    // Set Elements Length.
+    this.elemItemsLenght = this.elemItems.length - 1;
+
+    // Generate empty array for judgment.
+    this.checkElemList = [];
+    for (var i = 0; i <= this.elemItemsLenght; i++) {
+      this.checkElemList[i] = true;
+    }
+
+    // Set Initialize Event-Listener.
+    window.addEventListener('load', function (event) {
+      _this.Initialize();
+    });
+  }
+
+  _createClass(JS_RANDOM_ACTION_MODULE, [{
+    key: 'Random',
+    value: function Random() {
+      return Math.random();
+    }
+  }, {
+    key: 'Round',
+    value: function Round(num) {
+      return Math.round(num * 100) / 100;
+    }
+  }, {
+    key: 'RandomSelect',
+    value: function RandomSelect() {
+      var min = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+      var max = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 10;
+
+      return Math.floor(Math.random() * (max + 1 - min) + min);
+    }
+  }, {
+    key: 'Initialize',
+    value: function Initialize() {
+      var _this2 = this;
+
+      // Set initial position of element.
+      Array.prototype.forEach.call(this.elemItems, function (elem, i) {
+        var randomTop = _this2.Round(_this2.elemWrap.clientHeight * _this2.Random());
+        var randomLeft = _this2.Round(_this2.elemWrap.clientWidth * _this2.Random());
+
+        elem.style.top = randomTop + 'px';
+        elem.style.left = randomLeft + 'px';
+      });
+
+      if (this.CONFIG.autoStart) this.StartAction();
+    }
+  }, {
+    key: 'StartAction',
+    value: function StartAction() {
+      var _this3 = this;
+
+      setInterval(function () {
+        _this3.Decision();
+      }, this.CONFIG.interval);
+    }
+  }, {
+    key: 'Decision',
+    value: function Decision() {
+      var targetIndex = this.RandomSelect(0, this.elemItemsLenght);
+      if (this.checkElemList[targetIndex]) {
+        this.checkElemList[targetIndex] = false;
+        this.Action(targetIndex);
+      }
+    }
+  }, {
+    key: 'Action',
+    value: function Action(targetIndex) {
+      var _this4 = this;
+
+      this.Motion(targetIndex);
+
+      setTimeout(function () {
+        _this4.elemItems[targetIndex].classList.remove(_this4.CONFIG.addClassName);
+      }, this.CONFIG.durationX2 * 0.5);
+
+      setTimeout(function () {
+        _this4.Decision();
+        _this4.checkElemList[targetIndex] = true;
+      }, this.CONFIG.durationX2);
+    }
+  }, {
+    key: 'Motion',
+    value: function Motion(targetIndex) {
+      var randomTop = this.Round(this.elemWrap.clientHeight * this.Random());
+      var randomLeft = this.Round(this.elemWrap.clientWidth * this.Random());
+
+      var targetElemWidthPar2 = this.elemItems[targetIndex].clientWidth * 0.5;
+      var targetElemHeightPar2 = this.elemItems[targetIndex].clientHeight * 0.5;
+
+      this.elemItems[targetIndex].style.top = randomTop - targetElemHeightPar2 + 'px';
+      this.elemItems[targetIndex].style.left = randomLeft - targetElemWidthPar2 + 'px';
+      this.elemItems[targetIndex].classList.add(this.CONFIG.addClassName);
+    }
+  }]);
+
+  return JS_RANDOM_ACTION_MODULE;
+}();
