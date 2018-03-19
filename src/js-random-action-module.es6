@@ -4,7 +4,7 @@
  * JS RANDOM ACTION MODULE
  *
  * https://github.com/yama-dev/js-random-action-module
- * versoin 0.0.2
+ * versoin 0.0.3
  * Copyright yama-dev
  * Licensed under the MIT license.
  *
@@ -30,6 +30,7 @@ class JS_RANDOM_ACTION_MODULE {
       interval: options.interval         || 1000,
       addClassName: options.addClassName || 'active',
       autoStart: options.autoStart == false ? false : true,
+      positionRandom: options.positionRandom == false ? false : true,
     };
 
     // Set Elements.
@@ -70,8 +71,10 @@ class JS_RANDOM_ACTION_MODULE {
       var randomTop  = this.Round(this.elemWrap.clientHeight * this.Random());
       var randomLeft = this.Round(this.elemWrap.clientWidth * this.Random());
 
-      elem.style.top  = randomTop + 'px';
-      elem.style.left = randomLeft + 'px';
+      if(this.CONFIG.positionRandom){
+        elem.style.top  = randomTop + 'px';
+        elem.style.left = randomLeft + 'px';
+      }
     });
 
     if(this.CONFIG.autoStart) this.StartAction();
@@ -111,8 +114,10 @@ class JS_RANDOM_ACTION_MODULE {
     var targetElemWidthPar2  = this.elemItems[targetIndex].clientWidth * 0.5;
     var targetElemHeightPar2 = this.elemItems[targetIndex].clientHeight * 0.5;
 
-    this.elemItems[targetIndex].style.top  = (randomTop - targetElemHeightPar2) + 'px';
-    this.elemItems[targetIndex].style.left = (randomLeft - targetElemWidthPar2) + 'px';
+    if(this.CONFIG.positionRandom){
+      this.elemItems[targetIndex].style.top  = (randomTop - targetElemHeightPar2) + 'px';
+      this.elemItems[targetIndex].style.left = (randomLeft - targetElemWidthPar2) + 'px';
+    }
     this.elemItems[targetIndex].classList.add(this.CONFIG.addClassName);
   }
 
