@@ -12,10 +12,12 @@
  *   new JS_RANDOM_ACTION_MODULE( elemet ,{ options });
  *
  * Options Params.
- *   elemWrap     | str | default 'body'   | ex. 'body'
- *   durationX2   | int | default 2000     | ex. 2000
- *   interval     | int | default 1000     | ex. 1000
- *   addClassName | str | default 'active' | ex. 'active'
+ *   elemWrap       | str     | default 'body'   | ex. 'body'
+ *   durationX2     | int     | default 2000     | ex. 2000
+ *   interval       | int     | default 1000     | ex. 1000
+ *   addClassName   | str     | default 'active' | ex. 'active'
+ *   autoStart      | boolean | default true     | ex. false
+ *   positionRandom | boolean | default true     | ex. false
 */
 
 class JS_RANDOM_ACTION_MODULE {
