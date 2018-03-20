@@ -10,7 +10,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
  * JS RANDOM ACTION MODULE
  *
  * https://github.com/yama-dev/js-random-action-module
- * versoin 0.0.2
+ * versoin 0.0.3
  * Copyright yama-dev
  * Licensed under the MIT license.
  *
@@ -18,10 +18,12 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
  *   new JS_RANDOM_ACTION_MODULE( elemet ,{ options });
  *
  * Options Params.
- *   elemWrap     | str | default 'body'   | ex. 'body'
- *   durationX2   | int | default 2000     | ex. 2000
- *   interval     | int | default 1000     | ex. 1000
- *   addClassName | str | default 'active' | ex. 'active'
+ *   elemWrap       | str     | default 'body'   | ex. 'body'
+ *   durationX2     | int     | default 2000     | ex. 2000
+ *   interval       | int     | default 1000     | ex. 1000
+ *   addClassName   | str     | default 'active' | ex. 'active'
+ *   autoStart      | boolean | default true     | ex. false
+ *   positionRandom | boolean | default true     | ex. false
 */
 
 var JS_RANDOM_ACTION_MODULE = function () {
@@ -39,7 +41,8 @@ var JS_RANDOM_ACTION_MODULE = function () {
       durationX2: options.durationX2 || 2000,
       interval: options.interval || 1000,
       addClassName: options.addClassName || 'active',
-      autoStart: options.autoStart == false ? false : true
+      autoStart: options.autoStart == false ? false : true,
+      positionRandom: options.positionRandom == false ? false : true
     };
 
     // Set Elements.
@@ -89,8 +92,10 @@ var JS_RANDOM_ACTION_MODULE = function () {
         var randomTop = _this2.Round(_this2.elemWrap.clientHeight * _this2.Random());
         var randomLeft = _this2.Round(_this2.elemWrap.clientWidth * _this2.Random());
 
-        elem.style.top = randomTop + 'px';
-        elem.style.left = randomLeft + 'px';
+        if (_this2.CONFIG.positionRandom) {
+          elem.style.top = randomTop + 'px';
+          elem.style.left = randomLeft + 'px';
+        }
       });
 
       if (this.CONFIG.autoStart) this.StartAction();
@@ -138,8 +143,10 @@ var JS_RANDOM_ACTION_MODULE = function () {
       var targetElemWidthPar2 = this.elemItems[targetIndex].clientWidth * 0.5;
       var targetElemHeightPar2 = this.elemItems[targetIndex].clientHeight * 0.5;
 
-      this.elemItems[targetIndex].style.top = randomTop - targetElemHeightPar2 + 'px';
-      this.elemItems[targetIndex].style.left = randomLeft - targetElemWidthPar2 + 'px';
+      if (this.CONFIG.positionRandom) {
+        this.elemItems[targetIndex].style.top = randomTop - targetElemHeightPar2 + 'px';
+        this.elemItems[targetIndex].style.left = randomLeft - targetElemWidthPar2 + 'px';
+      }
       this.elemItems[targetIndex].classList.add(this.CONFIG.addClassName);
     }
   }]);

@@ -4,7 +4,7 @@
  * JS RANDOM ACTION MODULE
  *
  * https://github.com/yama-dev/js-random-action-module
- * versoin 0.0.2
+ * versoin 0.0.3
  * Copyright yama-dev
  * Licensed under the MIT license.
  *
@@ -12,10 +12,12 @@
  *   new JS_RANDOM_ACTION_MODULE( elemet ,{ options });
  *
  * Options Params.
- *   elemWrap     | str | default 'body'   | ex. 'body'
- *   durationX2   | int | default 2000     | ex. 2000
- *   interval     | int | default 1000     | ex. 1000
- *   addClassName | str | default 'active' | ex. 'active'
+ *   elemWrap       | str     | default 'body'   | ex. 'body'
+ *   durationX2     | int     | default 2000     | ex. 2000
+ *   interval       | int     | default 1000     | ex. 1000
+ *   addClassName   | str     | default 'active' | ex. 'active'
+ *   autoStart      | boolean | default true     | ex. false
+ *   positionRandom | boolean | default true     | ex. false
 */
 
 class JS_RANDOM_ACTION_MODULE {
@@ -30,6 +32,7 @@ class JS_RANDOM_ACTION_MODULE {
       interval: options.interval         || 1000,
       addClassName: options.addClassName || 'active',
       autoStart: options.autoStart == false ? false : true,
+      positionRandom: options.positionRandom == false ? false : true,
     };
 
     // Set Elements.
@@ -70,8 +73,10 @@ class JS_RANDOM_ACTION_MODULE {
       var randomTop  = this.Round(this.elemWrap.clientHeight * this.Random());
       var randomLeft = this.Round(this.elemWrap.clientWidth * this.Random());
 
-      elem.style.top  = randomTop + 'px';
-      elem.style.left = randomLeft + 'px';
+      if(this.CONFIG.positionRandom){
+        elem.style.top  = randomTop + 'px';
+        elem.style.left = randomLeft + 'px';
+      }
     });
 
     if(this.CONFIG.autoStart) this.StartAction();
@@ -111,8 +116,10 @@ class JS_RANDOM_ACTION_MODULE {
     var targetElemWidthPar2  = this.elemItems[targetIndex].clientWidth * 0.5;
     var targetElemHeightPar2 = this.elemItems[targetIndex].clientHeight * 0.5;
 
-    this.elemItems[targetIndex].style.top  = (randomTop - targetElemHeightPar2) + 'px';
-    this.elemItems[targetIndex].style.left = (randomLeft - targetElemWidthPar2) + 'px';
+    if(this.CONFIG.positionRandom){
+      this.elemItems[targetIndex].style.top  = (randomTop - targetElemHeightPar2) + 'px';
+      this.elemItems[targetIndex].style.left = (randomLeft - targetElemWidthPar2) + 'px';
+    }
     this.elemItems[targetIndex].classList.add(this.CONFIG.addClassName);
   }
 
