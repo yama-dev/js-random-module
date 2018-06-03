@@ -112,10 +112,19 @@ var JS_RANDOM_ACTION_MODULE = function () {
   }, {
     key: 'Decision',
     value: function Decision() {
+      if (this.elemItemsLenght <= this.DecisionCount) {
+        this.DecisionCount = 0;
+        return false;
+      }
       var targetIndex = this.RandomSelect(0, this.elemItemsLenght);
       if (this.checkElemList[targetIndex]) {
         this.checkElemList[targetIndex] = false;
         this.Action(targetIndex);
+        this.DecisionCount = 0;
+      } else {
+        // 既にactiveの場合は再帰的に呼び出し
+        this.DecisionCount++;
+        this.Decision();
       }
     }
   }, {
@@ -123,14 +132,16 @@ var JS_RANDOM_ACTION_MODULE = function () {
     value: function Action(targetIndex) {
       var _this4 = this;
 
+      // Start Motion.
       this.Motion(targetIndex);
 
+      // Remove class-name.
       setTimeout(function () {
         _this4.elemItems[targetIndex].classList.remove(_this4.CONFIG.addClassName);
       }, this.CONFIG.durationX2 * 0.5);
 
+      // Change check flg.
       setTimeout(function () {
-        _this4.Decision();
         _this4.checkElemList[targetIndex] = true;
       }, this.CONFIG.durationX2);
     }

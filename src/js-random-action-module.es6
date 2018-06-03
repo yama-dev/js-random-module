@@ -89,22 +89,33 @@ class JS_RANDOM_ACTION_MODULE {
   }
 
   Decision() {
+    if(this.elemItemsLenght <= this.DecisionCount){
+      this.DecisionCount = 0;
+      return false
+    }
     var targetIndex = this.RandomSelect(0, this.elemItemsLenght);
     if (this.checkElemList[targetIndex]) {
       this.checkElemList[targetIndex] = false;
       this.Action(targetIndex);
+      this.DecisionCount = 0;
+    } else {
+      // 既にactiveの場合は再帰的に呼び出し
+      this.DecisionCount++;
+      this.Decision();
     }
   }
 
   Action(targetIndex) {
+    // Start Motion.
     this.Motion(targetIndex);
 
+    // Remove class-name.
     setTimeout( () => {
       this.elemItems[targetIndex].classList.remove(this.CONFIG.addClassName);
     }, this.CONFIG.durationX2 * 0.5);
 
+    // Change check flg.
     setTimeout( () => {
-      this.Decision();
       this.checkElemList[targetIndex] = true;
     }, this.CONFIG.durationX2);
   }
