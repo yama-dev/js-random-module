@@ -1,7 +1,7 @@
 {
   "name": "js-random-action-module",
-  "version": "0.0.5",
-  "description": "",
+  "version": "0.0.6",
+  "description": "Run Dom randomly.",
   "main": "index.js",
   "scripts": {
     "start": "npm install && npm run develop",
