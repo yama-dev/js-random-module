@@ -10,7 +10,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
  * JS RANDOM ACTION MODULE
  *
  * https://github.com/yama-dev/js-random-action-module
- * versoin 0.0.3
+ * versoin 0.0.6
  * Copyright yama-dev
  * Licensed under the MIT license.
  *
@@ -24,6 +24,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
  *   addClassName   | str     | default 'active' | ex. 'active'
  *   autoStart      | boolean | default true     | ex. false
  *   positionRandom | boolean | default true     | ex. false
+ *   repeat         | boolean | default true     | ex. false
 */
 
 var JS_RANDOM_ACTION_MODULE = function () {
@@ -42,7 +43,8 @@ var JS_RANDOM_ACTION_MODULE = function () {
       interval: options.interval || 1000,
       addClassName: options.addClassName || 'active',
       autoStart: options.autoStart == false ? false : true,
-      positionRandom: options.positionRandom == false ? false : true
+      positionRandom: options.positionRandom == false ? false : true,
+      repeat: options.repeat == false ? false : true
     };
 
     // Set Elements.
@@ -105,17 +107,35 @@ var JS_RANDOM_ACTION_MODULE = function () {
     value: function StartAction() {
       var _this3 = this;
 
-      setInterval(function () {
+      this.Interval = setInterval(function () {
         _this3.Decision();
       }, this.CONFIG.interval);
     }
   }, {
+    key: 'StopAction',
+    value: function StopAction() {
+      clearInterval(this.Interval);
+    }
+  }, {
     key: 'Decision',
     value: function Decision() {
+      if (this.elemItemsLenght <= this.DecisionCount) {
+        if (!this.CONFIG.repeat) {
+          this.StopAction();
+        } else {
+          this.DecisionCount = 0;
+        }
+        return false;
+      }
       var targetIndex = this.RandomSelect(0, this.elemItemsLenght);
       if (this.checkElemList[targetIndex]) {
         this.checkElemList[targetIndex] = false;
         this.Action(targetIndex);
+        this.DecisionCount = 0;
+      } else {
+        // 既にactiveの場合は再帰的に呼び出し
+        this.DecisionCount++;
+        this.Decision();
       }
     }
   }, {
@@ -123,16 +143,22 @@ var JS_RANDOM_ACTION_MODULE = function () {
     value: function Action(targetIndex) {
       var _this4 = this;
 
+      // Start Motion.
       this.Motion(targetIndex);
 
-      setTimeout(function () {
-        _this4.elemItems[targetIndex].classList.remove(_this4.CONFIG.addClassName);
-      }, this.CONFIG.durationX2 * 0.5);
+      // Remove class-name.
+      if (this.CONFIG.repeat) {
+        setTimeout(function () {
+          _this4.elemItems[targetIndex].classList.remove(_this4.CONFIG.addClassName);
+        }, this.CONFIG.durationX2 * 0.5);
+      }
 
-      setTimeout(function () {
-        _this4.Decision();
-        _this4.checkElemList[targetIndex] = true;
-      }, this.CONFIG.durationX2);
+      // Change check flg.
+      if (this.CONFIG.repeat) {
+        setTimeout(function () {
+          _this4.checkElemList[targetIndex] = true;
+        }, this.CONFIG.durationX2);
+      }
     }
   }, {
     key: 'Motion',

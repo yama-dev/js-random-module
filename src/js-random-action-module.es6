@@ -4,7 +4,7 @@
  * JS RANDOM ACTION MODULE
  *
  * https://github.com/yama-dev/js-random-action-module
- * versoin 0.0.3
+ * versoin 0.0.6
  * Copyright yama-dev
  * Licensed under the MIT license.
  *
@@ -18,6 +18,7 @@
  *   addClassName   | str     | default 'active' | ex. 'active'
  *   autoStart      | boolean | default true     | ex. false
  *   positionRandom | boolean | default true     | ex. false
+ *   repeat         | boolean | default true     | ex. false
 */
 
 class JS_RANDOM_ACTION_MODULE {
@@ -33,6 +34,7 @@ class JS_RANDOM_ACTION_MODULE {
       addClassName: options.addClassName || 'active',
       autoStart: options.autoStart == false ? false : true,
       positionRandom: options.positionRandom == false ? false : true,
+      repeat: options.repeat == false ? false : true
     };
 
     // Set Elements.
@@ -83,30 +85,53 @@ class JS_RANDOM_ACTION_MODULE {
   }
 
   StartAction(){
-    setInterval( () => {
+    this.Interval = setInterval( () => {
       this.Decision();
     }, this.CONFIG.interval);
   }
 
+  StopAction(){
+    clearInterval(this.Interval);
+  }
+
   Decision() {
+    if(this.elemItemsLenght <= this.DecisionCount){
+      if(!this.CONFIG.repeat){
+        this.StopAction();
+      } else {
+        this.DecisionCount = 0;
+      }
+      return false
+    }
     var targetIndex = this.RandomSelect(0, this.elemItemsLenght);
     if (this.checkElemList[targetIndex]) {
       this.checkElemList[targetIndex] = false;
       this.Action(targetIndex);
+      this.DecisionCount = 0;
+    } else {
+      // 既にactiveの場合は再帰的に呼び出し
+      this.DecisionCount++;
+      this.Decision();
     }
   }
 
   Action(targetIndex) {
+    // Start Motion.
     this.Motion(targetIndex);
 
-    setTimeout( () => {
-      this.elemItems[targetIndex].classList.remove(this.CONFIG.addClassName);
-    }, this.CONFIG.durationX2 * 0.5);
+    // Remove class-name.
+    if(this.CONFIG.repeat){
+      setTimeout( () => {
+        this.elemItems[targetIndex].classList.remove(this.CONFIG.addClassName);
+      }, this.CONFIG.durationX2 * 0.5);
+    }
 
-    setTimeout( () => {
-      this.Decision();
-      this.checkElemList[targetIndex] = true;
-    }, this.CONFIG.durationX2);
+    // Change check flg.
+    if(this.CONFIG.repeat){
+      setTimeout( () => {
+        this.checkElemList[targetIndex] = true;
+      }, this.CONFIG.durationX2);
+    }
   }
 
   Motion(targetIndex) {
