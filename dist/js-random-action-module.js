@@ -24,6 +24,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
  *   addClassName   | str     | default 'active' | ex. 'active'
  *   autoStart      | boolean | default true     | ex. false
  *   positionRandom | boolean | default true     | ex. false
+ *   repeat         | boolean | default true     | ex. false
 */
 
 var JS_RANDOM_ACTION_MODULE = function () {
@@ -42,7 +43,8 @@ var JS_RANDOM_ACTION_MODULE = function () {
       interval: options.interval || 1000,
       addClassName: options.addClassName || 'active',
       autoStart: options.autoStart == false ? false : true,
-      positionRandom: options.positionRandom == false ? false : true
+      positionRandom: options.positionRandom == false ? false : true,
+      repeat: options.repeat == false ? false : true
     };
 
     // Set Elements.
@@ -105,15 +107,24 @@ var JS_RANDOM_ACTION_MODULE = function () {
     value: function StartAction() {
       var _this3 = this;
 
-      setInterval(function () {
+      this.Interval = setInterval(function () {
         _this3.Decision();
       }, this.CONFIG.interval);
+    }
+  }, {
+    key: 'StopAction',
+    value: function StopAction() {
+      clearInterval(this.Interval);
     }
   }, {
     key: 'Decision',
     value: function Decision() {
       if (this.elemItemsLenght <= this.DecisionCount) {
-        this.DecisionCount = 0;
+        if (!this.CONFIG.repeat) {
+          this.StopAction();
+        } else {
+          this.DecisionCount = 0;
+        }
         return false;
       }
       var targetIndex = this.RandomSelect(0, this.elemItemsLenght);
@@ -136,14 +147,18 @@ var JS_RANDOM_ACTION_MODULE = function () {
       this.Motion(targetIndex);
 
       // Remove class-name.
-      setTimeout(function () {
-        _this4.elemItems[targetIndex].classList.remove(_this4.CONFIG.addClassName);
-      }, this.CONFIG.durationX2 * 0.5);
+      if (this.CONFIG.repeat) {
+        setTimeout(function () {
+          _this4.elemItems[targetIndex].classList.remove(_this4.CONFIG.addClassName);
+        }, this.CONFIG.durationX2 * 0.5);
+      }
 
       // Change check flg.
-      setTimeout(function () {
-        _this4.checkElemList[targetIndex] = true;
-      }, this.CONFIG.durationX2);
+      if (this.CONFIG.repeat) {
+        setTimeout(function () {
+          _this4.checkElemList[targetIndex] = true;
+        }, this.CONFIG.durationX2);
+      }
     }
   }, {
     key: 'Motion',

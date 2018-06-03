@@ -18,6 +18,7 @@
  *   addClassName   | str     | default 'active' | ex. 'active'
  *   autoStart      | boolean | default true     | ex. false
  *   positionRandom | boolean | default true     | ex. false
+ *   repeat         | boolean | default true     | ex. false
 */
 
 class JS_RANDOM_ACTION_MODULE {
@@ -33,6 +34,7 @@ class JS_RANDOM_ACTION_MODULE {
       addClassName: options.addClassName || 'active',
       autoStart: options.autoStart == false ? false : true,
       positionRandom: options.positionRandom == false ? false : true,
+      repeat: options.repeat == false ? false : true
     };
 
     // Set Elements.
@@ -83,14 +85,22 @@ class JS_RANDOM_ACTION_MODULE {
   }
 
   StartAction(){
-    setInterval( () => {
+    this.Interval = setInterval( () => {
       this.Decision();
     }, this.CONFIG.interval);
   }
 
+  StopAction(){
+    clearInterval(this.Interval);
+  }
+
   Decision() {
     if(this.elemItemsLenght <= this.DecisionCount){
-      this.DecisionCount = 0;
+      if(!this.CONFIG.repeat){
+        this.StopAction();
+      } else {
+        this.DecisionCount = 0;
+      }
       return false
     }
     var targetIndex = this.RandomSelect(0, this.elemItemsLenght);
@@ -110,14 +120,18 @@ class JS_RANDOM_ACTION_MODULE {
     this.Motion(targetIndex);
 
     // Remove class-name.
-    setTimeout( () => {
-      this.elemItems[targetIndex].classList.remove(this.CONFIG.addClassName);
-    }, this.CONFIG.durationX2 * 0.5);
+    if(this.CONFIG.repeat){
+      setTimeout( () => {
+        this.elemItems[targetIndex].classList.remove(this.CONFIG.addClassName);
+      }, this.CONFIG.durationX2 * 0.5);
+    }
 
     // Change check flg.
-    setTimeout( () => {
-      this.checkElemList[targetIndex] = true;
-    }, this.CONFIG.durationX2);
+    if(this.CONFIG.repeat){
+      setTimeout( () => {
+        this.checkElemList[targetIndex] = true;
+      }, this.CONFIG.durationX2);
+    }
   }
 
   Motion(targetIndex) {
