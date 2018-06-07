@@ -1,6 +1,6 @@
 {
   "name": "js-random-action-module",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "Run Dom randomly.",
   "main": "./dist/js-random-action-module.min.js",
   "scripts": {
@@ -24,8 +24,5 @@
     "browser-sync": "^2.23.6",
     "npm-run-all": "^4.1.2",
     "uglify-js": "^3.3.14"
-  },
-  "dependencies": {
-    "underscore": "^1.8.3"
   }
 }

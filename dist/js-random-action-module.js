@@ -10,7 +10,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
  * JS RANDOM ACTION MODULE
  *
  * https://github.com/yama-dev/js-random-action-module
- * versoin 0.0.7
+ * versoin 0.0.8
  * Copyright yama-dev
  * Licensed under the MIT license.
  *
@@ -171,6 +171,29 @@ var JS_RANDOM_ACTION_MODULE = function () {
         this.elemItems[targetIndex].style.left = randomLeft - targetElemWidthPar2 + 'px';
       }
       this.elemItems[targetIndex].classList.add(this.CONFIG.addClassName);
+    }
+  }, {
+    key: 'Update',
+    value: function Update() {
+      this.StopAction();
+
+      // Reset ActionCount.
+      this.ActionCount = 0;
+
+      // Reset Elements.
+      this.elemWrap = document.querySelector(this.CONFIG.elemWrap);
+      this.elemItems = Array.prototype.slice.call(document.querySelectorAll(this.CONFIG.elemWrap + ' ' + this.CONFIG.elemItems));
+
+      // Reset Elements Length.
+      this.elemItemsLenght = this.elemItems.length - 1;
+
+      // Generate empty array for judgment.
+      this.checkElemList = [];
+      for (var i = 0; i <= this.elemItemsLenght; i++) {
+        this.checkElemList[i] = true;
+      }
+
+      this.StartAction();
     }
   }]);
 
