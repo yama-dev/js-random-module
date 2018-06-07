@@ -146,4 +146,26 @@ class JS_RANDOM_ACTION_MODULE {
     this.elemItems[targetIndex].classList.add(this.CONFIG.addClassName);
   }
 
+  Update(){
+    this.StopAction();
+
+    // Reset ActionCount.
+    this.ActionCount = 0;
+
+    // Reset Elements.
+    this.elemWrap  = document.querySelector(this.CONFIG.elemWrap);
+    this.elemItems = Array.prototype.slice.call(document.querySelectorAll(this.CONFIG.elemWrap + ' ' + this.CONFIG.elemItems));
+
+    // Reset Elements Length.
+    this.elemItemsLenght = this.elemItems.length - 1;
+
+    // Generate empty array for judgment.
+    this.checkElemList = [];
+    for (var i = 0; i <= this.elemItemsLenght; i++) {
+      this.checkElemList[i] = true;
+    }
+
+    this.StartAction();
+  }
+
 }
