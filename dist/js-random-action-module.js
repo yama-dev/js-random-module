@@ -10,7 +10,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
  * JS RANDOM ACTION MODULE
  *
  * https://github.com/yama-dev/js-random-action-module
- * versoin 0.0.7
+ * versoin 0.0.8
  * Copyright yama-dev
  * Licensed under the MIT license.
  *
