@@ -10,7 +10,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
  * JS RANDOM ACTION MODULE
  *
  * https://github.com/yama-dev/js-random-action-module
- * versoin 0.0.6
+ * versoin 0.0.7
  * Copyright yama-dev
  * Licensed under the MIT license.
  *
@@ -46,6 +46,8 @@ var JS_RANDOM_ACTION_MODULE = function () {
       positionRandom: options.positionRandom == false ? false : true,
       repeat: options.repeat == false ? false : true
     };
+
+    this.ActionCount = 0;
 
     // Set Elements.
     this.elemWrap = document.querySelector(this.CONFIG.elemWrap);
@@ -119,22 +121,17 @@ var JS_RANDOM_ACTION_MODULE = function () {
   }, {
     key: 'Decision',
     value: function Decision() {
-      if (this.elemItemsLenght <= this.DecisionCount) {
-        if (!this.CONFIG.repeat) {
-          this.StopAction();
-        } else {
-          this.DecisionCount = 0;
-        }
+      if (!this.CONFIG.repeat && this.elemItemsLenght < this.ActionCount) {
+        this.StopAction();
         return false;
-      }
+      } else {}
       var targetIndex = this.RandomSelect(0, this.elemItemsLenght);
       if (this.checkElemList[targetIndex]) {
+        this.ActionCount++;
         this.checkElemList[targetIndex] = false;
         this.Action(targetIndex);
-        this.DecisionCount = 0;
       } else {
         // 既にactiveの場合は再帰的に呼び出し
-        this.DecisionCount++;
         this.Decision();
       }
     }

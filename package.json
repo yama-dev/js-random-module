@@ -1,8 +1,8 @@
 {
   "name": "js-random-action-module",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Run Dom randomly.",
-  "main": "index.js",
+  "main": "./dist/js-random-action-module.min.js",
   "scripts": {
     "start": "npm install && npm run develop",
     "develop": "npm-run-all -p build:babel server",
