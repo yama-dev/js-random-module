@@ -37,6 +37,8 @@ class JS_RANDOM_ACTION_MODULE {
       repeat: options.repeat == false ? false : true
     };
 
+    this.ActionCount = 0;
+
     // Set Elements.
     this.elemWrap  = document.querySelector(this.CONFIG.elemWrap);
     this.elemItems = Array.prototype.slice.call(document.querySelectorAll(this.CONFIG.elemWrap + ' ' + this.CONFIG.elemItems));
@@ -95,22 +97,18 @@ class JS_RANDOM_ACTION_MODULE {
   }
 
   Decision() {
-    if(this.elemItemsLenght <= this.DecisionCount){
-      if(!this.CONFIG.repeat){
-        this.StopAction();
-      } else {
-        this.DecisionCount = 0;
-      }
+    if(!this.CONFIG.repeat && this.elemItemsLenght < this.ActionCount){
+      this.StopAction();
       return false
+    } else {
     }
     var targetIndex = this.RandomSelect(0, this.elemItemsLenght);
     if (this.checkElemList[targetIndex]) {
+      this.ActionCount++;
       this.checkElemList[targetIndex] = false;
       this.Action(targetIndex);
-      this.DecisionCount = 0;
     } else {
       // 既にactiveの場合は再帰的に呼び出し
-      this.DecisionCount++;
       this.Decision();
     }
   }
