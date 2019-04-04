@@ -1,28 +1,85 @@
 {
-  "name": "js-random-action-module",
-  "version": "0.0.8",
-  "description": "Run Dom randomly.",
-  "main": "./dist/js-random-action-module.min.js",
+  "name": "js-random-module",
+  "version": "0.2.0",
+  "description": "",
+  "keywords": [
+    "module",
+    "random"
+  ],
+  "author": "yama-dev",
+  "license": "MIT",
+  "main": "./dist/js-random-module.js",
   "scripts": {
     "start": "npm install && npm run develop",
-    "develop": "npm-run-all -p build:babel server",
-    "production": "npm-run-all -p build:babel:production minify",
-    "build:babel": "babel src --watch --out-dir dist --presets env",
-    "build:babel:production": "babel src --out-dir dist --presets env",
-    "minify": "uglifyjs --compress --mangle --comments --output dist/js-random-action-module.min.js -- dist/js-random-action-module.js",
-    "server": "browser-sync start --server ./ --directory ./sample --files **/*.css **/*.js **/*.html"
+    "develop": "npm-run-all -p build:develop server:develop",
+    "server:develop": "browser-sync start --server ./ --directory ./sample --files **/*.css **/*.js **/*.html",
+    "build:develop": "webpack --mode=development --progress --colors --watch",
+    "production": "npm-run-all -p build:production server:production",
+    "server:production": "browser-sync start --server ./ --directory ./sample --files **/*.css **/*.js **/*.html",
+    "build:production": "webpack --mode=production --progress --colors --watch",
+    "test": "mocha --compilers js:babel-core/register"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/yama-dev/js-random-action-module"
+    "url": "https://github.com/yama-dev/js-random-module"
   },
-  "author": "yama-dev",
-  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/yama-dev/js-random-module/issues"
+  },
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-preset-env": "^1.6.1",
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.2.2",
+    "@babel/plugin-transform-object-assign": "^7.2.0",
+    "@babel/preset-env": "^7.3.1",
+    "babel-loader": "^8.0.5",
     "browser-sync": "^2.23.6",
+    "eslint": "^5.12.0",
+    "eslint-loader": "^2.1.1",
+    "mocha": "^5.2.0",
     "npm-run-all": "^4.1.2",
-    "uglify-js": "^3.3.14"
+    "webpack": "^4.28.4",
+    "webpack-cli": "^3.2.1"
+  },
+  "babel": {
+    "presets": [
+      "@babel/preset-env"
+    ]
+  },
+  "eslintConfig": {
+    "env": {
+      "browser": true,
+      "commonjs": true,
+      "es6": true,
+      "jquery": true,
+      "node": true
+    },
+    "extends": "eslint:recommended",
+    "parserOptions": {
+      "ecmaFeatures": {
+        "jsx": true
+      },
+      "ecmaVersion": 2018,
+      "sourceType": "module"
+    },
+    "plugins": [],
+    "rules": {
+      "indent": [
+        "error",
+        2,
+        {
+          "outerIIFEBody": 0
+        }
+      ],
+      "quotes": [
+        "error",
+        "single"
+      ],
+      "semi": [
+        "error",
+        "always"
+      ],
+      "no-console": "warn",
+      "no-unused-vars": "warn"
+    }
   }
 }
