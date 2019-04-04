@@ -13,6 +13,7 @@ const webpack = require('webpack');
 
 const webpackPlugEnv = new webpack.EnvironmentPlugin({
   NODE_ENV: 'development',
+  VERSION: pkg.version,
   DEBUG: false
 });
 
@@ -30,7 +31,7 @@ const config = {
   output: {
     path: `${__dirname}/dist`,
     filename: 'js-random-module.js',
-    library: 'JS_RANDOM_MODULE',
+    library: 'RANDOM_MODULE',
     libraryExport: 'default',
     libraryTarget: 'umd'
   },
