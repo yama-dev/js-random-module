@@ -1,27 +1,6 @@
-/*!
- * @license
- *
- * JS RANDOM ACTION MODULE
- *
- * https://github.com/yama-dev/js-random-action-module
- * versoin 0.0.8
- * Copyright yama-dev
- * Licensed under the MIT license.
- *
- * Instance
- *   new JS_RANDOM_ACTION_MODULE( elemet ,{ options });
- *
- * Options Params.
- *   elemWrap       | str     | default 'body'   | ex. 'body'
- *   durationX2     | int     | default 2000     | ex. 2000
- *   interval       | int     | default 1000     | ex. 1000
- *   addClassName   | str     | default 'active' | ex. 'active'
- *   autoStart      | boolean | default true     | ex. false
- *   positionRandom | boolean | default true     | ex. false
- *   repeat         | boolean | default true     | ex. false
-*/
+/*eslint no-console: "off"*/
 
-class JS_RANDOM_ACTION_MODULE {
+export default class JS_RANDOM_ACTION_MODULE {
 
   constructor(elemItems,options={}){
 
@@ -53,7 +32,7 @@ class JS_RANDOM_ACTION_MODULE {
     }
 
     // Set Initialize Event-Listener.
-    window.addEventListener('load', (event) => {
+    window.addEventListener('load', () => {
       this.Initialize();
     });
 
@@ -73,7 +52,7 @@ class JS_RANDOM_ACTION_MODULE {
 
   Initialize() {
     // Set initial position of element.
-    Array.prototype.forEach.call(this.elemItems, (elem, i) =>  {
+    Array.prototype.forEach.call(this.elemItems, (elem) =>  {
       var randomTop  = this.Round(this.elemWrap.clientHeight * this.Random());
       var randomLeft = this.Round(this.elemWrap.clientWidth * this.Random());
 
@@ -99,8 +78,7 @@ class JS_RANDOM_ACTION_MODULE {
   Decision() {
     if(!this.CONFIG.repeat && this.elemItemsLenght < this.ActionCount){
       this.StopAction();
-      return false
-    } else {
+      return false;
     }
     var targetIndex = this.RandomSelect(0, this.elemItemsLenght);
     if (this.checkElemList[targetIndex]) {
