@@ -16,23 +16,33 @@ html, body {
   border: 1px solid #000;
 }
 
-.bg__item {
-  position: absolute;
-
-  opacity: 0;
-  -webkit-transition: opacity 1s ease 0s; 
-  transition: opacity 1s ease 0s
-}
-
-.bg__item.active {
-  opacity: 1;
-  -webkit-transition: opacity 1s ease 0s; 
-  transition: opacity 1s ease 0s
-}
-
 .shape--circle {
   width: 60px;
   height: 60px;
   border-radius: 50%;
   background: rgba(0,0,0,0.5);
+}
+
+.bg__item {
+  position: absolute;
+
+  opacity: 0;
+  -webkit-transition: transform 1s ease 0s, opacity 1s ease 0s; 
+  transition: transform 1s ease 0s, opacity 1s ease 0s
+}
+
+.bg__item.active {
+  opacity: 1;
+  -webkit-transform: scale(0.6);
+  transform: scale(0.6);
+  -webkit-transition: transform 1s ease 0s, opacity 1s ease 0s; 
+  transition: transform 1s ease 0s, opacity 1s ease 0s
+}
+
+.bg__item.current {
+  opacity: 1;
+  -webkit-transform: scale(1.6);
+  transform: scale(1.6);
+  -webkit-transition: transform 1s ease 0s, opacity 1s ease 0s; 
+  transition: transform 1s ease 0s, opacity 1s ease 0s
 }
