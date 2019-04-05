@@ -9,7 +9,10 @@ export default class RANDOM_MODULE {
       elemWrap: 'body',
       elemItems: elemItems||'.js-bg-item',
       durationX2: 2000,
+
       interval: 1000,
+      intervalDeflection: 0,
+
       addClassName: ['active'], // 配列
 
       autoStart: true,        // StartAction();
@@ -138,13 +141,20 @@ export default class RANDOM_MODULE {
   }
 
   StartAction(){
-    this.Interval = setInterval( () => {
+    let _racio = 0;
+    if(this.Config.intervalDeflection) _racio = (this.Config.intervalDeflection*this.Random() - (this.Config.intervalDeflection * 0.5));
+
+    this.Interval = setTimeout( () => {
+
       this.Decision();
-    }, this.Config.interval);
+
+      if(this.Config.autoStart) this.StartAction();
+
+    }, this.Config.interval + _racio);
   }
 
   StopAction(){
-    clearInterval(this.Interval);
+    clearTimeout(this.Interval);
   }
 
   // 位置を更新、リフレッシュ
