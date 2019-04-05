@@ -7,7 +7,7 @@ export default class RANDOM_MODULE {
     // Set Configs.
     let configDefault = {
       elemWrap: 'body',
-      elemItems: '.bg__item',
+      elemItems: elemItems||'.js-bg-item',
       durationX2: 2000,
       interval: 1000,
       addClassName: ['active'],
@@ -46,6 +46,12 @@ export default class RANDOM_MODULE {
 
     this.SetDomStyle();
 
+    // Stop if there are no elements
+    if(this.elemItemsLenght <= 0){
+      throw new Error('Not Found Elements.');
+    }
+
+    // Check Auto-Start.
     if(this.Config.autoStart) this.StartAction();
   }
 
