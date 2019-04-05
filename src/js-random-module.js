@@ -10,16 +10,24 @@ export default class RANDOM_MODULE {
       elemItems: elemItems||'.js-bg-item',
       durationX2: 2000,
       interval: 1000,
-      addClassName: ['active'],
-      autoStart: true,
-      positionRandom: true,
+      addClassName: ['active'], // 配列
+
+      autoStart: true,        // StartAction();
       repeat: true,
+
+      positionRandom: true,   // Property top, left
+      rotateRandom: false,
+      rotateRandomRange: 180, // -90°～ 90°
 
       afterTheDecimalPoint: 2 // 少数点以下の桁数
     };
 
     // Merge Config Settings.
     this.Config = Object.assign(configDefault, options);
+
+    if(!Array.isArray(this.Config.addClassName)){
+      this.Config.addClassName = new Array(this.Config.addClassName);
+    }
 
     // Set Version.
     this.Version = process.env.VERSION;
@@ -212,18 +220,28 @@ export default class RANDOM_MODULE {
   // ターゲットの情報を書き換え
   Motion(targetIndex) {
 
-    // 乱数をセット
-    let randomTop  = this.Round(this.elemWrap.clientHeight * this.Random());
-    let randomLeft = this.Round(this.elemWrap.clientWidth * this.Random());
-
-    // 要素の中心に調整
-    let targetElemWidthPar2  = this.elemItems[targetIndex].clientWidth * 0.5;
-    let targetElemHeightPar2 = this.elemItems[targetIndex].clientHeight * 0.5;
-
     if(this.Config.positionRandom){
+      // 乱数をセット
+      let randomTop  = this.Round(this.elemWrap.clientHeight * this.Random());
+      let randomLeft = this.Round(this.elemWrap.clientWidth * this.Random());
+
+      // 要素の中心に調整
+      let targetElemWidthPar2  = this.elemItems[targetIndex].clientWidth * 0.5;
+      let targetElemHeightPar2 = this.elemItems[targetIndex].clientHeight * 0.5;
+
       this.elemItems[targetIndex].style.top  = (randomTop - targetElemHeightPar2) + 'px';
       this.elemItems[targetIndex].style.left = (randomLeft - targetElemWidthPar2) + 'px';
     }
+
+    if(this.Config.rotateRandom){
+      // 乱数をセット
+      let randomRotate = this.Round(this.Config.rotateRandomRange * this.Random())-(this.Config.rotateRandomRange * 0.5);
+
+      this.elemItems[targetIndex].style.webkitTransform  = 'rotate(' + randomRotate + 'deg)';
+      this.elemItems[targetIndex].style.transfrom = 'rotate(' + randomRotate + 'deg)';
+    }
+
+    // 要素を更新
     this.elemItems[targetIndex].classList.add(this.ChoiceClassName());
 
     if(this.plugins){
