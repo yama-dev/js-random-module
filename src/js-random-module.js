@@ -139,6 +139,28 @@ export default class RANDOM_MODULE {
     clearInterval(this.Interval);
   }
 
+  // 位置を更新、リフレッシュ
+  Update(){
+    this.StopAction();
+
+    // Reset ActionCount.
+    this.State.ActionCount = 0;
+
+    this.SetDom();
+
+    this.SetDomStyle();
+
+    // Stop if there are no elements
+    if(this.elemItemsLenght <= 0){
+      throw new Error('Not Found Elements.');
+    }
+
+    // Check Auto-Start.
+    if(this.Config.autoStart) this.StartAction();
+  }
+
+
+  // 要素を判定
   Decision() {
     if(!this.Config.repeat && this.elemItemsLenght < this.State.ActionCount){
       this.StopAction();
@@ -165,9 +187,12 @@ export default class RANDOM_MODULE {
     if(this.Config.repeat){
       setTimeout( () => {
         this.RemoveClassName(this.elemItems[targetIndex]);
-        this.plugins.map((item)=>{
-          if(item.end) item.end(targetIndex,this.elemItems[targetIndex],this);
-        });
+
+        if(this.plugins){
+          this.plugins.map((item)=>{
+            if(item.end) item.end(targetIndex,this.elemItems[targetIndex],this);
+          });
+        }
       }, this.Config.durationX2 * 0.5);
     }
 
@@ -175,9 +200,11 @@ export default class RANDOM_MODULE {
     if(this.Config.repeat){
       setTimeout( () => {
         this.checkElemList[targetIndex] = true;
-        this.plugins.map((item)=>{
-          if(item.reset) item.reset(targetIndex,this.elemItems[targetIndex],this);
-        });
+        if(this.plugins){
+          this.plugins.map((item)=>{
+            if(item.reset) item.reset(targetIndex,this.elemItems[targetIndex],this);
+          });
+        }
       }, this.Config.durationX2);
     }
   }
@@ -185,9 +212,11 @@ export default class RANDOM_MODULE {
   // ターゲットの情報を書き換え
   Motion(targetIndex) {
 
+    // 乱数をセット
     let randomTop  = this.Round(this.elemWrap.clientHeight * this.Random());
     let randomLeft = this.Round(this.elemWrap.clientWidth * this.Random());
 
+    // 要素の中心に調整
     let targetElemWidthPar2  = this.elemItems[targetIndex].clientWidth * 0.5;
     let targetElemHeightPar2 = this.elemItems[targetIndex].clientHeight * 0.5;
 
@@ -197,32 +226,12 @@ export default class RANDOM_MODULE {
     }
     this.elemItems[targetIndex].classList.add(this.ChoiceClassName());
 
-    this.plugins.map((item)=>{
-      if(item.start) item.start(targetIndex,this.elemItems[targetIndex],this);
-    });
-
-  }
-
-  Update(){
-    this.StopAction();
-
-    // Reset ActionCount.
-    this.State.ActionCount = 0;
-
-    // Reset Elements.
-    this.elemWrap  = document.querySelector(this.Config.elemWrap);
-    this.elemItems = Array.prototype.slice.call(document.querySelectorAll(this.Config.elemWrap + ' ' + this.Config.elemItems));
-
-    // Reset Elements Length.
-    this.elemItemsLenght = this.elemItems.length - 1;
-
-    // Generate empty array for judgment.
-    this.checkElemList = [];
-    for (let i = 0; i <= this.elemItemsLenght; i++) {
-      this.checkElemList[i] = true;
+    if(this.plugins){
+      this.plugins.map((item)=>{
+        if(item.start) item.start(targetIndex,this.elemItems[targetIndex],this);
+      });
     }
 
-    this.StartAction();
   }
 
 }
