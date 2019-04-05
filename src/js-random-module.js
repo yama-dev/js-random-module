@@ -7,19 +7,30 @@ export default class RANDOM_MODULE {
     // Set Configs.
     let configDefault = {
       elemWrap: 'body',
-      elemItems: '.bg__item',
+      elemItems: elemItems||'.js-bg-item',
       durationX2: 2000,
+
       interval: 1000,
-      addClassName: ['active'],
-      autoStart: true,
-      positionRandom: true,
+      intervalDeflection: 0,
+
+      addClassName: ['active'], // 配列
+
+      autoStart: true,        // StartAction();
       repeat: true,
+
+      positionRandom: true,   // Property top, left
+      rotateRandom: false,
+      rotateRandomRange: 180, // -90°～ 90°
 
       afterTheDecimalPoint: 2 // 少数点以下の桁数
     };
 
     // Merge Config Settings.
     this.Config = Object.assign(configDefault, options);
+
+    if(!Array.isArray(this.Config.addClassName)){
+      this.Config.addClassName = new Array(this.Config.addClassName);
+    }
 
     // Set Version.
     this.Version = process.env.VERSION;
@@ -46,6 +57,12 @@ export default class RANDOM_MODULE {
 
     this.SetDomStyle();
 
+    // Stop if there are no elements
+    if(this.elemItemsLenght <= 0){
+      throw new Error('Not Found Elements.');
+    }
+
+    // Check Auto-Start.
     if(this.Config.autoStart) this.StartAction();
   }
 
@@ -124,15 +141,44 @@ export default class RANDOM_MODULE {
   }
 
   StartAction(){
-    this.Interval = setInterval( () => {
+    let _racio = 0;
+    if(this.Config.intervalDeflection) _racio = (this.Config.intervalDeflection*this.Random() - (this.Config.intervalDeflection * 0.5));
+
+    this.Interval = setTimeout( () => {
+
       this.Decision();
-    }, this.Config.interval);
+
+      if(this.Config.autoStart) this.StartAction();
+
+    }, this.Config.interval + _racio);
   }
 
   StopAction(){
-    clearInterval(this.Interval);
+    clearTimeout(this.Interval);
   }
 
+  // 位置を更新、リフレッシュ
+  Update(){
+    this.StopAction();
+
+    // Reset ActionCount.
+    this.State.ActionCount = 0;
+
+    this.SetDom();
+
+    this.SetDomStyle();
+
+    // Stop if there are no elements
+    if(this.elemItemsLenght <= 0){
+      throw new Error('Not Found Elements.');
+    }
+
+    // Check Auto-Start.
+    if(this.Config.autoStart) this.StartAction();
+  }
+
+
+  // 要素を判定
   Decision() {
     if(!this.Config.repeat && this.elemItemsLenght < this.State.ActionCount){
       this.StopAction();
@@ -159,9 +205,12 @@ export default class RANDOM_MODULE {
     if(this.Config.repeat){
       setTimeout( () => {
         this.RemoveClassName(this.elemItems[targetIndex]);
-        this.plugins.map((item)=>{
-          if(item.end) item.end(targetIndex,this.elemItems[targetIndex],this);
-        });
+
+        if(this.plugins){
+          this.plugins.map((item)=>{
+            if(item.end) item.end(targetIndex,this.elemItems[targetIndex],this);
+          });
+        }
       }, this.Config.durationX2 * 0.5);
     }
 
@@ -169,9 +218,11 @@ export default class RANDOM_MODULE {
     if(this.Config.repeat){
       setTimeout( () => {
         this.checkElemList[targetIndex] = true;
-        this.plugins.map((item)=>{
-          if(item.reset) item.reset(targetIndex,this.elemItems[targetIndex],this);
-        });
+        if(this.plugins){
+          this.plugins.map((item)=>{
+            if(item.reset) item.reset(targetIndex,this.elemItems[targetIndex],this);
+          });
+        }
       }, this.Config.durationX2);
     }
   }
@@ -179,44 +230,36 @@ export default class RANDOM_MODULE {
   // ターゲットの情報を書き換え
   Motion(targetIndex) {
 
-    let randomTop  = this.Round(this.elemWrap.clientHeight * this.Random());
-    let randomLeft = this.Round(this.elemWrap.clientWidth * this.Random());
-
-    let targetElemWidthPar2  = this.elemItems[targetIndex].clientWidth * 0.5;
-    let targetElemHeightPar2 = this.elemItems[targetIndex].clientHeight * 0.5;
-
     if(this.Config.positionRandom){
+      // 乱数をセット
+      let randomTop  = this.Round(this.elemWrap.clientHeight * this.Random());
+      let randomLeft = this.Round(this.elemWrap.clientWidth * this.Random());
+
+      // 要素の中心に調整
+      let targetElemWidthPar2  = this.elemItems[targetIndex].clientWidth * 0.5;
+      let targetElemHeightPar2 = this.elemItems[targetIndex].clientHeight * 0.5;
+
       this.elemItems[targetIndex].style.top  = (randomTop - targetElemHeightPar2) + 'px';
       this.elemItems[targetIndex].style.left = (randomLeft - targetElemWidthPar2) + 'px';
     }
-    this.elemItems[targetIndex].classList.add(this.ChoiceClassName());
 
-    this.plugins.map((item)=>{
-      if(item.start) item.start(targetIndex,this.elemItems[targetIndex],this);
-    });
+    if(this.Config.rotateRandom){
+      // 乱数をセット
+      let randomRotate = this.Round(this.Config.rotateRandomRange * this.Random())-(this.Config.rotateRandomRange * 0.5);
 
-  }
-
-  Update(){
-    this.StopAction();
-
-    // Reset ActionCount.
-    this.State.ActionCount = 0;
-
-    // Reset Elements.
-    this.elemWrap  = document.querySelector(this.Config.elemWrap);
-    this.elemItems = Array.prototype.slice.call(document.querySelectorAll(this.Config.elemWrap + ' ' + this.Config.elemItems));
-
-    // Reset Elements Length.
-    this.elemItemsLenght = this.elemItems.length - 1;
-
-    // Generate empty array for judgment.
-    this.checkElemList = [];
-    for (let i = 0; i <= this.elemItemsLenght; i++) {
-      this.checkElemList[i] = true;
+      this.elemItems[targetIndex].style.webkitTransform  = 'rotate(' + randomRotate + 'deg)';
+      this.elemItems[targetIndex].style.transfrom = 'rotate(' + randomRotate + 'deg)';
     }
 
-    this.StartAction();
+    // 要素を更新
+    this.elemItems[targetIndex].classList.add(this.ChoiceClassName());
+
+    if(this.plugins){
+      this.plugins.map((item)=>{
+        if(item.start) item.start(targetIndex,this.elemItems[targetIndex],this);
+      });
+    }
+
   }
 
 }

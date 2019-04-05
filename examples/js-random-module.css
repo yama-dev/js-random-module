@@ -9,7 +9,7 @@ html, body {
   height: 100%;
 }
 
-.bg {
+.js-bg {
   position: relative;
   width: 100%;
   height: 500px;
@@ -23,7 +23,7 @@ html, body {
   background: rgba(0,0,0,0.5);
 }
 
-.bg__item {
+.js-bg-item {
   position: absolute;
 
   opacity: 0;
@@ -31,7 +31,7 @@ html, body {
   transition: transform 1s ease 0s, opacity 1s ease 0s
 }
 
-.bg__item.active {
+.js-bg-item.active {
   opacity: 1;
   -webkit-transform: scale(0.6);
   transform: scale(0.6);
@@ -39,7 +39,7 @@ html, body {
   transition: transform 1s ease 0s, opacity 1s ease 0s
 }
 
-.bg__item.current {
+.js-bg-item.current {
   opacity: 1;
   -webkit-transform: scale(1.6);
   transform: scale(1.6);
