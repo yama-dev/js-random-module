@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title></title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
   <link rel="stylesheet" href="./js-random-module.css" type="text/css" charset="utf-8">
 </head>
 <body>
@@ -18,6 +19,10 @@
   <div class="js-bg-item"><div class="shape--circle"></div></div>
   <div class="js-bg-item"><div class="shape--circle"></div></div>
   <div class="js-bg-item"><div class="shape--circle"></div></div>
+</div>
+<div>
+  <p><button type="button" class="btn btn-secondary" onclick="RAM.StartAction();">RAM.StartAction();</button></p>
+  <p><button type="button" class="btn btn-secondary" onclick="RAM.StopAction();">RAM.StopAction();</button></p>
 </div>
 <script src="../dist/js-random-module.js"></script>
 <script>
@@ -35,8 +40,9 @@ var Plugin = {
 RANDOM_MODULE.use(Plugin);
 var RAM = new RANDOM_MODULE('.js-bg-item',{
   elemWrap: '.js-bg',
-  durationX2: 2200,
-  interval: 300,
+  durationX2: 3000,
+  interval: 1000,
+  intervalDeflection: 500,
   addClassName: ['active','current'],
   autoStart: true,
   positionRandom: true,
