@@ -15,7 +15,7 @@ It's a random action utility.
 
 ## Installation,Download
 
-- Standalone(CDN) -> [https://cdn.jsdelivr.net/gh/yama-dev/js-random-module@v0.2.0/dist/js-random-module.js](https://cdn.jsdelivr.net/gh/yama-dev/js-random-module@v0.2.0/dist/js-random-module.js)
+- Standalone(CDN) -> [https://cdn.jsdelivr.net/gh/yama-dev/js-random-module@v0.2.4/dist/js-random-module.js](https://cdn.jsdelivr.net/gh/yama-dev/js-random-module@v0.2.4/dist/js-random-module.js)
 
 <br>
 
