@@ -6,18 +6,18 @@
   <link rel="stylesheet" href="./js-random-module.css" type="text/css" charset="utf-8">
 </head>
 <body>
-<div class="bg">
-  <div class="bg__item"><div class="shape--circle"></div></div>
-  <div class="bg__item"><div class="shape--circle"></div></div>
-  <div class="bg__item"><div class="shape--circle"></div></div>
-  <div class="bg__item"><div class="shape--circle"></div></div>
-  <div class="bg__item"><div class="shape--circle"></div></div>
+<div class="js-bg">
+  <div class="js-bg-item"><div class="shape--circle"></div></div>
+  <div class="js-bg-item"><div class="shape--circle"></div></div>
+  <div class="js-bg-item"><div class="shape--circle"></div></div>
+  <div class="js-bg-item"><div class="shape--circle"></div></div>
+  <div class="js-bg-item"><div class="shape--circle"></div></div>
 
-  <div class="bg__item"><div class="shape--circle"></div></div>
-  <div class="bg__item"><div class="shape--circle"></div></div>
-  <div class="bg__item"><div class="shape--circle"></div></div>
-  <div class="bg__item"><div class="shape--circle"></div></div>
-  <div class="bg__item"><div class="shape--circle"></div></div>
+  <div class="js-bg-item"><div class="shape--circle"></div></div>
+  <div class="js-bg-item"><div class="shape--circle"></div></div>
+  <div class="js-bg-item"><div class="shape--circle"></div></div>
+  <div class="js-bg-item"><div class="shape--circle"></div></div>
+  <div class="js-bg-item"><div class="shape--circle"></div></div>
 </div>
 <script src="../dist/js-random-module.js"></script>
 <script>
@@ -33,8 +33,8 @@ var Plugin = {
   }
 };
 RANDOM_MODULE.use(Plugin);
-var RAM = new RANDOM_MODULE('.bg__item',{
-  elemWrap: '.bg',
+var RAM = new RANDOM_MODULE('.js-bg-item',{
+  elemWrap: '.js-bg',
   durationX2: 2200,
   interval: 300,
   addClassName: ['active','current'],
