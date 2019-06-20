@@ -32,6 +32,10 @@ export default class RANDOM_MODULE {
       this.Config.addClassName = new Array(this.Config.addClassName);
     }
 
+    if(this.Config.interval <= 30){
+      this.Config.interval = 30;
+    }
+
     // Set Version.
     this.Version = process.env.VERSION;
 
