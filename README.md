@@ -15,7 +15,7 @@ It's a random action utility.
 
 ## Installation,Download
 
-- Standalone(CDN) -> [https://cdn.jsdelivr.net/gh/yama-dev/js-random-module@v0.2.4/dist/js-random-module.js](https://cdn.jsdelivr.net/gh/yama-dev/js-random-module@v0.2.4/dist/js-random-module.js)
+- Standalone(CDN) -> [https://cdn.jsdelivr.net/gh/yama-dev/js-random-module@v0.3.0/dist/js-random-module.js](https://cdn.jsdelivr.net/gh/yama-dev/js-random-module@v0.3.0/dist/js-random-module.js)
 
 <br>
 
@@ -36,8 +36,26 @@ import RANDOM_MODULE from 'js-random-module';
 ### Basic Standalone Usage
 
 ``` html
+<div class="js-bg">
+  <div class="js-bg-item">test-1</div>
+  <div class="js-bg-item">test-2</div>
+  <div class="js-bg-item">test-3</div>
+  <div class="js-bg-item">test-4</div>
+  <div class="js-bg-item">test-5</div>
+</div>
+
 <script src="./js-random-module.js"></script>
 <script>
+var RAM = new RANDOM_MODULE('.js-bg-item',{
+  elemWrap: '.js-bg',
+  durationX2: 3000,
+  interval: 1000,
+  intervalDeflection: 500,
+  addClassName: ['is-active','is-current'],
+  autoStart: true,
+  positionRandom: true,
+  repeat: true
+});
 </script>
 ```
 
