@@ -32,11 +32,17 @@ export default class RANDOM_MODULE {
       this.Config.addClassName = new Array(this.Config.addClassName);
     }
 
+    if(this.Config.interval <= 30){
+      this.Config.interval = 30;
+    }
+
     // Set Version.
     this.Version = process.env.VERSION;
 
     this.State = {
-      ActionCount: 0
+      ActionCount: 0,
+      DecisionCount: 0,
+      DecisionCountLimit: 10
     };
 
     // SetModule.
@@ -142,7 +148,12 @@ export default class RANDOM_MODULE {
 
   StartAction(){
     let _racio = 0;
-    if(this.Config.intervalDeflection) _racio = (this.Config.intervalDeflection*this.Random() - (this.Config.intervalDeflection * 0.5));
+    if(this.Config.intervalDeflection){
+      _racio = Math.ceil((this.Config.intervalDeflection*this.Random() - (this.Config.intervalDeflection * 0.5)));
+    }
+
+    let _delay = this.Config.interval + _racio;
+    if(_delay <= 0) _delay = 0;
 
     this.Interval = setTimeout( () => {
 
@@ -150,7 +161,7 @@ export default class RANDOM_MODULE {
 
       if(this.Config.autoStart) this.StartAction();
 
-    }, this.Config.interval + _racio);
+    }, _delay);
   }
 
   StopAction(){
@@ -180,18 +191,25 @@ export default class RANDOM_MODULE {
 
   // 要素を判定
   Decision() {
+
+    // リピート時の停止用
     if(!this.Config.repeat && this.elemItemsLenght < this.State.ActionCount){
       this.StopAction();
       return false;
     }
+
     let targetIndex = this.RandomSelect(0, this.elemItemsLenght);
     if (this.checkElemList[targetIndex]) {
       this.State.ActionCount++;
       this.checkElemList[targetIndex] = false;
       this.Action(targetIndex);
+      this.State.DecisionCount = 0;
     } else {
       // 既にactiveの場合は再帰的に呼び出し
-      this.Decision();
+      this.State.DecisionCount++;
+      if(this.State.DecisionCount < this.State.DecisionCountLimit){
+        this.Decision();
+      }
     }
   }
 
@@ -208,7 +226,7 @@ export default class RANDOM_MODULE {
 
         if(this.plugins){
           this.plugins.map((item)=>{
-            if(item.end) item.end(targetIndex,this.elemItems[targetIndex],this);
+            if(item.between) item.between(targetIndex,this.elemItems[targetIndex],this);
           });
         }
       }, this.Config.durationX2 * 0.5);
@@ -220,7 +238,7 @@ export default class RANDOM_MODULE {
         this.checkElemList[targetIndex] = true;
         if(this.plugins){
           this.plugins.map((item)=>{
-            if(item.reset) item.reset(targetIndex,this.elemItems[targetIndex],this);
+            if(item.end) item.end(targetIndex,this.elemItems[targetIndex],this);
           });
         }
       }, this.Config.durationX2);
