@@ -25,12 +25,12 @@ It's a random action utility.
 
 ``` bash
 # install npm.
-npm install --save-dev js-random-module
+npm install --save-dev @yama-dev/js-random-module
 ```
 
 ``` javascript
 // import.
-import RANDOM_MODULE from 'js-random-module';
+import RANDOM_MODULE from '@yama-dev/js-random-module';
 ```
 
 ### Basic Standalone Usage
