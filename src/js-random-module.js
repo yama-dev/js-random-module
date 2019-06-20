@@ -208,9 +208,9 @@ export default class RANDOM_MODULE {
       // 既にactiveの場合は再帰的に呼び出し
       this.State.DecisionCount++;
       if(this.State.DecisionCount < this.State.DecisionCountLimit){
-      this.Decision();
+        this.Decision();
+      }
     }
-  }
   }
 
   // ターゲットに対しての処理
@@ -226,7 +226,7 @@ export default class RANDOM_MODULE {
 
         if(this.plugins){
           this.plugins.map((item)=>{
-            if(item.end) item.end(targetIndex,this.elemItems[targetIndex],this);
+            if(item.between) item.between(targetIndex,this.elemItems[targetIndex],this);
           });
         }
       }, this.Config.durationX2 * 0.5);
@@ -238,7 +238,7 @@ export default class RANDOM_MODULE {
         this.checkElemList[targetIndex] = true;
         if(this.plugins){
           this.plugins.map((item)=>{
-            if(item.reset) item.reset(targetIndex,this.elemItems[targetIndex],this);
+            if(item.end) item.end(targetIndex,this.elemItems[targetIndex],this);
           });
         }
       }, this.Config.durationX2);
