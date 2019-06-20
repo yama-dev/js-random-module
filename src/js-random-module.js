@@ -146,7 +146,12 @@ export default class RANDOM_MODULE {
 
   StartAction(){
     let _racio = 0;
-    if(this.Config.intervalDeflection) _racio = (this.Config.intervalDeflection*this.Random() - (this.Config.intervalDeflection * 0.5));
+    if(this.Config.intervalDeflection){
+      _racio = Math.ceil((this.Config.intervalDeflection*this.Random() - (this.Config.intervalDeflection * 0.5)));
+    }
+
+    let _delay = this.Config.interval + _racio;
+    if(_delay <= 0) _delay = 0;
 
     this.Interval = setTimeout( () => {
 
@@ -154,7 +159,7 @@ export default class RANDOM_MODULE {
 
       if(this.Config.autoStart) this.StartAction();
 
-    }, this.Config.interval + _racio);
+    }, _delay);
   }
 
   StopAction(){
