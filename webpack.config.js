@@ -12,7 +12,7 @@ const env = process.env.NODE_ENV;
 const webpack = require('webpack');
 
 const webpackPlugEnv = new webpack.EnvironmentPlugin({
-  NODE_ENV: 'development',
+  NODE_ENV: env,
   VERSION: pkg.version,
   DEBUG: false
 });
