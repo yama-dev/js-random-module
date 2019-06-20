@@ -19,6 +19,24 @@
   <div class="js-bg-item"><div class="shape--circle"></div></div>
   <div class="js-bg-item"><div class="shape--circle"></div></div>
   <div class="js-bg-item"><div class="shape--circle"></div></div>
+
+  <div class="js-bg-item"><div class="shape--circle"></div></div>
+  <div class="js-bg-item"><div class="shape--circle"></div></div>
+  <div class="js-bg-item"><div class="shape--circle"></div></div>
+  <div class="js-bg-item"><div class="shape--circle"></div></div>
+  <div class="js-bg-item"><div class="shape--circle"></div></div>
+
+  <div class="js-bg-item"><div class="shape--circle"></div></div>
+  <div class="js-bg-item"><div class="shape--circle"></div></div>
+  <div class="js-bg-item"><div class="shape--circle"></div></div>
+  <div class="js-bg-item"><div class="shape--circle"></div></div>
+  <div class="js-bg-item"><div class="shape--circle"></div></div>
+
+  <div class="js-bg-item"><div class="shape--circle"></div></div>
+  <div class="js-bg-item"><div class="shape--circle"></div></div>
+  <div class="js-bg-item"><div class="shape--circle"></div></div>
+  <div class="js-bg-item"><div class="shape--circle"></div></div>
+  <div class="js-bg-item"><div class="shape--circle"></div></div>
 </div>
 <div>
   <p><button type="button" class="btn btn-secondary" onclick="RAM.StartAction();">RAM.StartAction();</button></p>
@@ -30,9 +48,9 @@ var Plugin = {
   install(Module){
     Module.start = function(index, elem, obj){
     }
-    Module.end = function(index, elem, obj){
+    Module.between = function(index, elem, obj){
     }
-    Module.reset = function(index, elem, obj){
+    Module.end = function(index, elem, obj){
     }
     return Module;
   }
@@ -41,7 +59,7 @@ RANDOM_MODULE.use(Plugin);
 var RAM = new RANDOM_MODULE('.js-bg-item',{
   elemWrap: '.js-bg',
   durationX2: 3000,
-  interval: 1000,
+  interval: 500,
   intervalDeflection: 500,
   addClassName: ['active','current'],
   autoStart: true,
