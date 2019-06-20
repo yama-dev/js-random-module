@@ -40,7 +40,9 @@ export default class RANDOM_MODULE {
     this.Version = process.env.VERSION;
 
     this.State = {
-      ActionCount: 0
+      ActionCount: 0,
+      DecisionCount: 0,
+      DecisionCountLimit: 10
     };
 
     // SetModule.
@@ -189,19 +191,26 @@ export default class RANDOM_MODULE {
 
   // 要素を判定
   Decision() {
+
+    // リピート時の停止用
     if(!this.Config.repeat && this.elemItemsLenght < this.State.ActionCount){
       this.StopAction();
       return false;
     }
+
     let targetIndex = this.RandomSelect(0, this.elemItemsLenght);
     if (this.checkElemList[targetIndex]) {
       this.State.ActionCount++;
       this.checkElemList[targetIndex] = false;
       this.Action(targetIndex);
+      this.State.DecisionCount = 0;
     } else {
       // 既にactiveの場合は再帰的に呼び出し
+      this.State.DecisionCount++;
+      if(this.State.DecisionCount < this.State.DecisionCountLimit){
       this.Decision();
     }
+  }
   }
 
   // ターゲットに対しての処理
