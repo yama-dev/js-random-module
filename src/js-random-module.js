@@ -13,6 +13,8 @@ export default class RANDOM_MODULE {
       interval: 1000,
       intervalDeflection: 0,
 
+      preStartCount: 0, // 初回時にアクティブ化する数
+
       addClassName: ['active'], // 配列
 
       autoStart: true,        // StartAction();
@@ -34,6 +36,10 @@ export default class RANDOM_MODULE {
 
     if(this.Config.interval <= 30){
       this.Config.interval = 30;
+    }
+
+    if(this.Config.preStartCount <= 0){
+      this.Config.preStartCount = 0;
     }
 
     // Set Version.
@@ -66,6 +72,12 @@ export default class RANDOM_MODULE {
     // Stop if there are no elements
     if(this.elemItemsLenght <= 0){
       throw new Error('Not Found Elements.');
+    }
+
+    if(this.Config.preStartCount){
+      for (let _i = 0; _i < this.Config.preStartCount; ++_i) {
+        if(this.Config.autoStart) this.Decision();
+      }
     }
 
     // Check Auto-Start.
