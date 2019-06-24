@@ -1,7 +1,7 @@
 /*!
  * JS RANDOM MODULE (JavaScript Library)
  *   @yama-dev/js-random-module
- * Version 0.3.0
+ * Version 0.4.0
  * Repository https://github.com/yama-dev/js-random-module
  * Copyright yama-dev
  * Licensed MIT
