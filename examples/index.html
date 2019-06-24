@@ -58,11 +58,12 @@ var Plugin = {
 RANDOM_MODULE.use(Plugin);
 var RAM = new RANDOM_MODULE('.js-bg-item',{
   elemWrap: '.js-bg',
-  durationX2: 3000,
-  interval: 500,
+  durationX2: 5000,
+  interval: 2000,
   intervalDeflection: 500,
   addClassName: ['active','current'],
   autoStart: true,
+  preStartCount: 1,
   positionRandom: true,
   repeat: true
 });
