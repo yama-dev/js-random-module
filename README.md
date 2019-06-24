@@ -3,6 +3,7 @@
 <br>
 
 ## Feature
+
 It's a random action utility.
 
 <br>
@@ -15,7 +16,7 @@ It's a random action utility.
 
 ## Installation,Download
 
-- Standalone(CDN) -> [https://cdn.jsdelivr.net/gh/yama-dev/js-random-module@v0.3.0/dist/js-random-module.js](https://cdn.jsdelivr.net/gh/yama-dev/js-random-module@v0.3.0/dist/js-random-module.js)
+- Standalone(CDN) -> [https://cdn.jsdelivr.net/gh/yama-dev/js-random-module@v0.4.0/dist/js-random-module.js](https://cdn.jsdelivr.net/gh/yama-dev/js-random-module@v0.4.0/dist/js-random-module.js)
 
 <br>
 
@@ -53,6 +54,7 @@ var RAM = new RANDOM_MODULE('.js-bg-item',{
   intervalDeflection: 500,
   addClassName: ['is-active','is-current'],
   autoStart: true,
+  preStartCount: 1,
   positionRandom: true,
   repeat: true
 });
