@@ -52,7 +52,7 @@ export default class RANDOM_MODULE {
     };
 
     // SetModule.
-    if(document.readyState == 'complete'){
+    if(document.readyState == 'complete' || document.readyState == 'interactive'){
       this.SetModule();
     } else {
       document.addEventListener('DOMContentLoaded', () => {
