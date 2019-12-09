@@ -31,7 +31,7 @@ html, body {
   transition: transform 1s ease 0s, opacity 1s ease 0s
 }
 
-.js-bg-item.active {
+.js-bg-item.js-active {
   opacity: 1;
   -webkit-transform: scale(0.6);
   transform: scale(0.6);
@@ -39,7 +39,7 @@ html, body {
   transition: transform 1s ease 0s, opacity 1s ease 0s
 }
 
-.js-bg-item.current {
+.js-bg-item.js-current {
   opacity: 1;
   -webkit-transform: scale(1.6);
   transform: scale(1.6);
