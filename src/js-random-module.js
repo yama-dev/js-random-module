@@ -92,11 +92,11 @@ export default class RANDOM_MODULE {
     this.elemItems = Array.prototype.slice.call(document.querySelectorAll(this.Config.elemWrap + ' ' + this.Config.elemItems));
 
     // Set Elements Length.
-    this.elemItemsLenght = this.elemItems.length - 1;
+    this.elemItemsLenght = this.elemItems.length;
 
     // Generate empty array for judgment.
     this.checkElemList = [];
-    for (let i = 0; i <= this.elemItemsLenght; i++) {
+    for (let i = 0; i < this.elemItemsLenght; i++) {
       this.checkElemList[i] = true;
     }
   }
