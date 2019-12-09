@@ -15,7 +15,7 @@ export default class RANDOM_MODULE {
 
       preStartCount: 0, // 初回時にアクティブ化する数
 
-      addClassName: ['active'], // 配列
+      addClassName: ['js-active'], // 配列
 
       autoStart: true,        // StartAction();
       repeat: true,
@@ -24,7 +24,9 @@ export default class RANDOM_MODULE {
       rotateRandom: false,
       rotateRandomRange: 180, // -90°～ 90°
 
-      afterTheDecimalPoint: 2 // 少数点以下の桁数
+      afterTheDecimalPoint: 2, // 少数点以下の桁数
+
+      isDebug: false
     };
 
     // Merge Config Settings.
@@ -70,7 +72,7 @@ export default class RANDOM_MODULE {
     this.SetDomStyle();
 
     // Stop if there are no elements
-    if(this.elemItemsLenght <= 0){
+    if(this.elemItemsLenght <= 0 && this.Config.isDebug){
       throw new Error('Not Found Elements.');
     }
 
@@ -90,11 +92,11 @@ export default class RANDOM_MODULE {
     this.elemItems = Array.prototype.slice.call(document.querySelectorAll(this.Config.elemWrap + ' ' + this.Config.elemItems));
 
     // Set Elements Length.
-    this.elemItemsLenght = this.elemItems.length - 1;
+    this.elemItemsLenght = this.elemItems.length;
 
     // Generate empty array for judgment.
     this.checkElemList = [];
-    for (let i = 0; i <= this.elemItemsLenght; i++) {
+    for (let i = 0; i < this.elemItemsLenght; i++) {
       this.checkElemList[i] = true;
     }
   }
