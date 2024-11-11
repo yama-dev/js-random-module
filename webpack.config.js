@@ -1,11 +1,6 @@
 const pkg = require('./package.json');
 
-const comment = `JS RANDOM MODULE (JavaScript Library)
-  ${pkg.name}
-Version ${pkg.version}
-Repository ${pkg.repository.url}
-Copyright ${pkg.author}
-Licensed ${pkg.license}`;
+const comment = `JS RANDOM MODULE (JavaScript Library) ${pkg.name} Version ${pkg.version} Repository ${pkg.repository.url} Copyright ${pkg.author} Licensed ${pkg.license}`;
 
 const env = process.env.NODE_ENV;
 
