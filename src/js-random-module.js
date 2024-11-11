@@ -72,7 +72,7 @@ export default class RANDOM_MODULE {
     this.SetDomStyle();
 
     // Stop if there are no elements
-    if(this.elemItemsLenght <= 0 && this.Config.isDebug){
+    if(this.elemItemsLength <= 0 && this.Config.isDebug){
       throw new Error('Not Found Elements.');
     }
 
@@ -92,11 +92,11 @@ export default class RANDOM_MODULE {
     this.elemItems = Array.prototype.slice.call(document.querySelectorAll(this.Config.elemWrap + ' ' + this.Config.elemItems));
 
     // Set Elements Length.
-    this.elemItemsLenght = this.elemItems.length;
+    this.elemItemsLength = this.elemItems.length;
 
     // Generate empty array for judgment.
     this.checkElemList = [];
-    for (let i = 0; i < this.elemItemsLenght; i++) {
+    for (let i = 0; i < this.elemItemsLength; i++) {
       this.checkElemList[i] = true;
     }
   }
@@ -194,7 +194,7 @@ export default class RANDOM_MODULE {
     this.SetDomStyle();
 
     // Stop if there are no elements
-    if(this.elemItemsLenght <= 0){
+    if(this.elemItemsLength <= 0){
       throw new Error('Not Found Elements.');
     }
 
@@ -207,12 +207,12 @@ export default class RANDOM_MODULE {
   Decision() {
 
     // リピート時の停止用
-    if(!this.Config.repeat && this.elemItemsLenght < this.State.ActionCount){
+    if(!this.Config.repeat && this.elemItemsLength < this.State.ActionCount){
       this.StopAction();
       return false;
     }
 
-    let targetIndex = this.RandomSelect(0, this.elemItemsLenght);
+    let targetIndex = this.RandomSelect(0, this.elemItemsLength);
     if (this.checkElemList[targetIndex]) {
       this.State.ActionCount++;
       this.checkElemList[targetIndex] = false;
