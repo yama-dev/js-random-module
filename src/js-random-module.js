@@ -20,6 +20,8 @@ export default class RANDOM_MODULE {
       autoStart: true,        // StartAction();
       repeat: true,
 
+      leaveStop: true,
+
       positionRandom: true,   // Property top, left
       rotateRandom: false,
       rotateRandomRange: 180, // -90°～ 90°
@@ -50,7 +52,12 @@ export default class RANDOM_MODULE {
     this.State = {
       ActionCount: 0,
       DecisionCount: 0,
-      DecisionCountLimit: 10
+      DecisionCountLimit: 10,
+
+      flg: {
+        running: false,
+        blur: false,
+      }
     };
 
     // SetModule.
@@ -72,7 +79,7 @@ export default class RANDOM_MODULE {
     this.SetDomStyle();
 
     // Stop if there are no elements
-    if(this.elemItemsLenght <= 0 && this.Config.isDebug){
+    if(this.elemItemsLength <= 0 && this.Config.isDebug){
       throw new Error('Not Found Elements.');
     }
 
@@ -83,7 +90,23 @@ export default class RANDOM_MODULE {
     }
 
     // Check Auto-Start.
-    if(this.Config.autoStart) this.StartAction();
+    if(this.Config.autoStart){
+      this.StartAction();
+      this.State.flg.running = true;
+    }
+
+    window.addEventListener('focus', () => {
+      this.State.flg.blur = false;
+      if(this.Config.autoStart){
+        this.Start();
+      }
+    });
+    window.addEventListener('blur', () => {
+      this.State.flg.blur = true;
+      if(this.Config.leaveStop){
+        this.StopAction();
+      }
+    });
   }
 
   SetDom(){
@@ -92,11 +115,11 @@ export default class RANDOM_MODULE {
     this.elemItems = Array.prototype.slice.call(document.querySelectorAll(this.Config.elemWrap + ' ' + this.Config.elemItems));
 
     // Set Elements Length.
-    this.elemItemsLenght = this.elemItems.length;
+    this.elemItemsLength = this.elemItems.length;
 
     // Generate empty array for judgment.
     this.checkElemList = [];
-    for (let i = 0; i < this.elemItemsLenght; i++) {
+    for (let i = 0; i < this.elemItemsLength; i++) {
       this.checkElemList[i] = true;
     }
   }
@@ -173,13 +196,26 @@ export default class RANDOM_MODULE {
 
       this.Decision();
 
-      if(this.Config.autoStart) this.StartAction();
+      if(this.State.flg.running) this.StartAction();
 
     }, _delay);
   }
 
   StopAction(){
+    this.State.flg.running = false;
     clearTimeout(this.Interval);
+  }
+
+  Start(){
+    if(this.State.flg.running == true){
+      return false;
+    }
+    this.State.flg.running = true;
+    this.StartAction();
+  }
+
+  Stop(){
+    this.StopAction();
   }
 
   // 位置を更新、リフレッシュ
@@ -194,7 +230,7 @@ export default class RANDOM_MODULE {
     this.SetDomStyle();
 
     // Stop if there are no elements
-    if(this.elemItemsLenght <= 0){
+    if(this.elemItemsLength <= 0){
       throw new Error('Not Found Elements.');
     }
 
@@ -207,12 +243,12 @@ export default class RANDOM_MODULE {
   Decision() {
 
     // リピート時の停止用
-    if(!this.Config.repeat && this.elemItemsLenght < this.State.ActionCount){
+    if(!this.Config.repeat && this.elemItemsLength < this.State.ActionCount){
       this.StopAction();
       return false;
     }
 
-    let targetIndex = this.RandomSelect(0, this.elemItemsLenght);
+    let targetIndex = this.RandomSelect(0, this.elemItemsLength);
     if (this.checkElemList[targetIndex]) {
       this.State.ActionCount++;
       this.checkElemList[targetIndex] = false;

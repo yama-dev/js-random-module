@@ -16,7 +16,7 @@ It's a random action utility.
 
 ## Installation,Download
 
-- Standalone(CDN) -> [https://cdn.jsdelivr.net/gh/yama-dev/js-random-module@v0.4.3/dist/js-random-module.js](https://cdn.jsdelivr.net/gh/yama-dev/js-random-module@v0.4.3/dist/js-random-module.js)
+- Standalone(CDN) -> [https://cdn.jsdelivr.net/gh/yama-dev/js-random-module@v0.5.0/dist/js-random-module.js](https://cdn.jsdelivr.net/gh/yama-dev/js-random-module@v0.5.0/dist/js-random-module.js)
 
 <br>
 
@@ -47,7 +47,7 @@ import RANDOM_MODULE from '@yama-dev/js-random-module';
 
 <script src="./js-random-module.js"></script>
 <script>
-var RAM = new RANDOM_MODULE('.js-bg-item',{
+const RAM = new RANDOM_MODULE('.js-bg-item',{
   elemWrap: '.js-bg',
   durationX2: 3000,
   interval: 1000,
@@ -55,6 +55,7 @@ var RAM = new RANDOM_MODULE('.js-bg-item',{
   addClassName: ['is-active','is-current'],
   autoStart: true,
   preStartCount: 1,
+  leaveStop: true,
   positionRandom: true,
   repeat: true
 });
@@ -66,44 +67,6 @@ var RAM = new RANDOM_MODULE('.js-bg-item',{
 ## Dependencies
 
 none
-
-<br><br><br>
-
-___
-
-**For Developer**
-
-## Contribution
-
-1. Fork it ( https://github.com/yama-dev/js-random-module/fork )
-2. Create your feature branch (git checkout -b my-new-feature)
-3. Commit your changes (git commit -am 'Add some feature')
-4. Push to the branch (git push origin my-new-feature)
-5. Create new Pull Request
-
-<br>
-
-## Develop
-
-### at Development
-
-Install node modules.
-
-``` bash
-$ npm install
-```
-
-Run npm script 'develop'
-
-``` bash
-$ npm run develop
-```
-
-Run npm script 'production'
-
-``` bash
-$ npm run production
-```
 
 <br>
 
