@@ -39,8 +39,8 @@
   <div class="js-bg-item"><div class="shape--circle"></div></div>
 </div>
 <div>
-  <p><button type="button" class="btn btn-secondary" onclick="RAM.StartAction();">RAM.StartAction();</button></p>
-  <p><button type="button" class="btn btn-secondary" onclick="RAM.StopAction();">RAM.StopAction();</button></p>
+  <p><button type="button" class="btn btn-secondary" onclick="RAM.Start();">RAM.Start();</button></p>
+  <p><button type="button" class="btn btn-secondary" onclick="RAM.Stop();">RAM.Stop();</button></p>
 </div>
 <script src="../dist/js-random-module.js"></script>
 <script>
@@ -64,6 +64,7 @@ var RAM = new RANDOM_MODULE('.js-bg-item',{
   addClassName: ['js-active','js-current'],
   autoStart: true,
   preStartCount: 1,
+  leaveStop: true,
   positionRandom: true,
   repeat: true
 });
