@@ -20,6 +20,8 @@ export default class RANDOM_MODULE {
       autoStart: true,        // StartAction();
       repeat: true,
 
+      leaveStop: true,
+
       positionRandom: true,   // Property top, left
       rotateRandom: false,
       rotateRandomRange: 180, // -90°～ 90°
@@ -50,7 +52,12 @@ export default class RANDOM_MODULE {
     this.State = {
       ActionCount: 0,
       DecisionCount: 0,
-      DecisionCountLimit: 10
+      DecisionCountLimit: 10,
+
+      flg: {
+        running: false,
+        blur: false,
+      }
     };
 
     // SetModule.
@@ -83,7 +90,23 @@ export default class RANDOM_MODULE {
     }
 
     // Check Auto-Start.
-    if(this.Config.autoStart) this.StartAction();
+    if(this.Config.autoStart){
+      this.StartAction();
+      this.State.flg.running = true;
+    }
+
+    window.addEventListener('focus', () => {
+      this.State.flg.blur = false;
+      if(this.Config.autoStart){
+        this.Start();
+      }
+    });
+    window.addEventListener('blur', () => {
+      this.State.flg.blur = true;
+      if(this.Config.leaveStop){
+        this.StopAction();
+      }
+    });
   }
 
   SetDom(){
@@ -173,13 +196,26 @@ export default class RANDOM_MODULE {
 
       this.Decision();
 
-      if(this.Config.autoStart) this.StartAction();
+      if(this.State.flg.running) this.StartAction();
 
     }, _delay);
   }
 
   StopAction(){
+    this.State.flg.running = false;
     clearTimeout(this.Interval);
+  }
+
+  Start(){
+    if(this.State.flg.running == true){
+      return false;
+    }
+    this.State.flg.running = true;
+    this.StartAction();
+  }
+
+  Stop(){
+    this.StopAction();
   }
 
   // 位置を更新、リフレッシュ
