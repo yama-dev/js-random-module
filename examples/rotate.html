@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+  <link rel="stylesheet" href="./js-random-module.css" type="text/css" charset="utf-8">
+</head>
+<body>
+<div class="js-bg">
+  <div class="js-bg-item"><div class="shape--circle"></div></div>
+  <div class="js-bg-item"><div class="shape--circle"></div></div>
+  <div class="js-bg-item"><div class="shape--circle"></div></div>
+  <div class="js-bg-item"><div class="shape--circle"></div></div>
+  <div class="js-bg-item"><div class="shape--circle"></div></div>
+
+  <div class="js-bg-item"><div class="shape--circle"></div></div>
+  <div class="js-bg-item"><div class="shape--circle"></div></div>
+  <div class="js-bg-item"><div class="shape--circle"></div></div>
+  <div class="js-bg-item"><div class="shape--circle"></div></div>
+  <div class="js-bg-item"><div class="shape--circle"></div></div>
+
+  <div class="js-bg-item"><div class="shape--circle"></div></div>
+  <div class="js-bg-item"><div class="shape--circle"></div></div>
+  <div class="js-bg-item"><div class="shape--circle"></div></div>
+  <div class="js-bg-item"><div class="shape--circle"></div></div>
+  <div class="js-bg-item"><div class="shape--circle"></div></div>
+
+  <div class="js-bg-item"><div class="shape--circle"></div></div>
+  <div class="js-bg-item"><div class="shape--circle"></div></div>
+  <div class="js-bg-item"><div class="shape--circle"></div></div>
+  <div class="js-bg-item"><div class="shape--circle"></div></div>
+  <div class="js-bg-item"><div class="shape--circle"></div></div>
+
+  <div class="js-bg-item"><div class="shape--circle"></div></div>
+  <div class="js-bg-item"><div class="shape--circle"></div></div>
+  <div class="js-bg-item"><div class="shape--circle"></div></div>
+  <div class="js-bg-item"><div class="shape--circle"></div></div>
+  <div class="js-bg-item"><div class="shape--circle"></div></div>
+</div>
+<div>
+  <p><button type="button" class="btn btn-secondary" onclick="RAM.Start();">RAM.Start();</button></p>
+  <p><button type="button" class="btn btn-secondary" onclick="RAM.Stop();">RAM.Stop();</button></p>
+</div>
+<script src="../dist/js-random-module.js"></script>
+<script>
+var Plugin = {
+  install(Module){
+    Module.start = function(index, elem, obj){
+    }
+    Module.between = function(index, elem, obj){
+    }
+    Module.end = function(index, elem, obj){
+    }
+    return Module;
+  }
+};
+RANDOM_MODULE.use(Plugin);
+var RAM = new RANDOM_MODULE('.js-bg-item',{
+  elemWrap: '.js-bg',
+  durationX2: 3000,
+  interval: 1000,
+  intervalDeflection: 500,
+  addClassName: ['js-active','js-current'],
+  autoStart: true,
+  preStartCount: 10,
+  leaveStop: true,
+  positionRandom: true,
+  rotateRandom: true,
+  rotateRandomRange: 180, // -90°～ 90°
+  repeat: true,
+});
+</script>
+</body>
+</html>
