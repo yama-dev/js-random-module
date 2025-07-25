@@ -6,6 +6,7 @@ export default class RANDOM_MODULE {
 
     // Set Configs.
     let configDefault = {
+      slug: 'randomModule',
       elemWrap: 'body',
       elemItems: elemItems||'.js-bg-item',
       durationX2: 2000,
@@ -318,6 +319,9 @@ export default class RANDOM_MODULE {
       this.elemItems[targetIndex].style.webkitTransform  = 'rotate(' + randomRotate + 'deg)';
       this.elemItems[targetIndex].style.transfrom = 'rotate(' + randomRotate + 'deg)';
     }
+
+    // Set dataset.
+    this.elemItems[targetIndex].dataset[this.Config.slug+'Count'] = this.State.ActionCount;
 
     // 要素を更新
     this.elemItems[targetIndex].classList.add(this.ChoiceClassName());
